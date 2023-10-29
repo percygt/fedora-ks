@@ -1,9 +1,4 @@
 url --mirrorlist="https://mirrors.fedoraproject.org/mirrorlist?repo=fedora-$releasever&arch=$basearch"
-repo --name=rpmfusion-free --mirrorlist="https://mirrors.rpmfusion.org/mirrorlist?repo=free-fedora=$releasever&arch=$basearch"
-repo --name=rpmfusion-free-updates --mirrorlist="https://mirrors.rpmfusion.org/mirrorlist?repo=free-fedora-updates-released=$releasever&arch=$basearch" --cost=0
-repo --name=rpmfusion-nonfree --mirrorlist="https://mirrors.rpmfusion.org/mirrorlist?repo=nonfree-fedora=$releasever&arch=$basearch"
-repo --name=rpmfusion-nonfree-updates --mirrorlist="https://mirrors.rpmfusion.org/mirrorlist?repo=nonfree-fedora-updates-released=$releasever&arch=$basearch" --cost=0
-repo --name=brave --mirrorlist="https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo"
 
 
 # Use graphical install
@@ -61,13 +56,10 @@ grub2-editenv - unset menu_auto_hide
 systemctl disable flatpak-add-fedora-repos
 flatpak remote-add flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 
-# Brave
-rpm --import https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
-
 # Install Flatpak apps
 flatpak install -y flathub com.mattjakeman.ExtensionManager
 
-ROOT_UUID="$(sudo grub2-probe --target=fs_uuid /)"
+ROOT_UUID="$(grub2-probe --target=fs_uuid /)"
 OPTIONS="$(grep '/home' /etc/fstab | awk '{print $4}' | cut -d, -f2-)"
 
 SUBVOLUMES=(
@@ -86,20 +78,20 @@ SUBVOLUMES=(
 
 for dir in "${SUBVOLUMES[@]}" ; do
     if [[ -d "/${dir}" ]] ; then
-        sudo mv -v "/${dir}" "/${dir}-old"
-        sudo btrfs subvolume create "/${dir}"
-        sudo cp -ar "/${dir}-old/." "/${dir}/"
+        mv -v "/${dir}" "/${dir}-old"
+        btrfs subvolume create "/${dir}"
+        cp -ar "/${dir}-old/." "/${dir}/"
     else
-        sudo btrfs subvolume create "/${dir}"
+        btrfs subvolume create "/${dir}"
     fi
-    sudo restorecon -RF "/${dir}"
+    restorecon -RF "/${dir}"
     printf "%-41s %-24s %-5s %-s %-s\n" \
         "UUID=${ROOT_UUID}" \
         "/${dir}" \
         "btrfs" \
         "subvol=${dir},${OPTIONS}" \
         "0 0" | \
-        sudo tee -a /etc/fstab
+        tee -a /etc/fstab
 done
 
 chmod 1777 /var/tmp
@@ -112,7 +104,7 @@ mount -va
 
 for dir in "${SUBVOLUMES[@]}" ; do
     if [[ -d "/${dir}-old" ]] ; then
-        sudo rm -rf "/${dir}-old"
+        rm -rf "/${dir}-old"
     fi
 done
 
