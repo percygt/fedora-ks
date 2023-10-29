@@ -56,9 +56,6 @@ grub2-editenv - unset menu_auto_hide
 systemctl disable flatpak-add-fedora-repos
 flatpak remote-add flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 
-# Install Flatpak apps
-flatpak install -y flathub com.mattjakeman.ExtensionManager
-
 ROOT_UUID="$(grub2-probe --target=fs_uuid /)"
 OPTIONS="$(grep '/home' /etc/fstab | awk '{print $4}' | cut -d, -f2-)"
 
