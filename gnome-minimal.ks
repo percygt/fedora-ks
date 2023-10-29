@@ -10,8 +10,6 @@ graphical
 @fonts
 @multimedia                            # Common audio/video frameworks
 fedora-workstation-repositories        # Default Fedora repositories
-rpmfusion-free-release
-rpmfusion-nonfree-release
 gnome-console
 gnome-disk-utility
 gnome-shell
