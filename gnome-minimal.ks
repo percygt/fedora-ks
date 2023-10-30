@@ -6,11 +6,6 @@ graphical
 # System timezone
 timezone Asia/Manila
 
-# System language
-lang en_US.UTF-8
-
-# Keyboard layout
-keyboard --vckeymap="us" --xlayouts="us"
 
 # Install system packages
 %packages
