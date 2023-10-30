@@ -1,8 +1,16 @@
 url --mirrorlist="https://mirrors.fedoraproject.org/mirrorlist?repo=fedora-$releasever&arch=$basearch"
 
-
 # Use graphical install
 graphical
+
+# System timezone
+timezone Asia/Manila
+
+# System language
+lang en_US.UTF-8
+
+# Keyboard layout
+keyboard --vckeymap="us" --xlayouts="us"
 
 # Install system packages
 %packages
@@ -36,6 +44,10 @@ make
 flatpak
 snapper
 python3-dnf-plugin-snapper
+syncthing
+bzip2
+https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
+https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 plymouth-system-theme
 %end
 
@@ -53,7 +65,15 @@ grub2-editenv - unset menu_auto_hide
 # Configure Flatpak
 systemctl disable flatpak-add-fedora-repos
 flatpak remote-add flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+flatpak install -y flathub md.obsidian.Obsidian
 
+#VSCode
+rpm --import https://packages.microsoft.com/keys/microsoft.asc
+sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
+
+#Brave
+dnf config-manager --add-repo https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo
+rpm --import https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
 
 %end
 
