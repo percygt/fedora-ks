@@ -3,8 +3,6 @@ url --mirrorlist="https://mirrors.fedoraproject.org/mirrorlist?repo=fedora-$rele
 # Use graphical install
 graphical
 
-# System timezone
-timezone Asia/Manila
 
 
 # Install system packages
