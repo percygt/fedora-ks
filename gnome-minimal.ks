@@ -37,6 +37,7 @@ flatpak
 snapper
 python3-dnf-plugin-snapper
 syncthing
+stow
 bzip2
 https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
 https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
@@ -67,6 +68,8 @@ sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.micros
 dnf config-manager --add-repo https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo
 rpm --import https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
 
+#starship
+dnf copr enable atim/starship
 %end
 
 # Reboot after installation
