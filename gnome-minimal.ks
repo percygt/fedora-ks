@@ -3,9 +3,6 @@ url --mirrorlist="https://mirrors.fedoraproject.org/mirrorlist?repo=fedora-$rele
 # Use graphical install
 graphical
 
-keyboard --vckeymap=us --xlayouts='us'
-lang en_US.UTF-8
-timezone Asia/Manila --utc
 
 # Install system packages
 %packages
